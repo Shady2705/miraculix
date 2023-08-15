@@ -283,6 +283,28 @@ V umsortieren, so dass in Reihenfolge ausgelesen wird?
   }
 #endif
 
+#elif AtOnce == 5
+#if defined AVX2
+#define gV5_LoopB(TYPE, SNDTYPE, TRDTYPE, AVXTYPE, ENDTYPE)    \
+  const AVXTYPE fC0 = AVXLOAD((TRDTYPE *)(ff0 + (int)pC0[b])); \
+  const AVXTYPE fC1 = AVXLOAD((TRDTYPE *)(ff1 + (int)pC1[b])); \
+  const AVXTYPE fC2 = AVXLOAD((TRDTYPE *)(ff2 + (int)pC2[b])); \
+  const AVXTYPE fC3 = AVXLOAD((TRDTYPE *)(ff3 + (int)pC3[b])); \
+  const AVXTYPE fC4 = AVXLOAD((TRDTYPE *)(ff4 + (int)pC4[b])); \
+  AVXTYPE tb = AVXLOAD((TRDTYPE *)(t + b));                    \
+  const AVXTYPE g0 = AVXADD(fC0, fC1);                         \
+  const AVXTYPE g1 = AVXADD(fC2, fC3);                         \
+  const AVXTYPE g2 = AVXADD(g0, g1);                           \
+  const AVXTYPE h = AVXADD(fC4, g2);                           \
+  tb = AVXADD(tb, h);                                          \
+  AVXSTORE((TRDTYPE *)(t + b), tb);
+
+#else
+#define gV5_LoopB(TYPE, SNDTYPE, TRDTYPE, AVXTYPE, ENDTYPE) \
+  t[b] += (ff0[(int)pC0[b]] + ff1[(int)pC1[b]]) + (ff2[(int)pC2[b]] + ff3[(int)pC3[b]] + ff4[(int)pC4[b]]);
+
+#endif
+
 #else
 #error AtOnce unsound
 #endif // AtOnce
