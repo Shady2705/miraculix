@@ -27,9 +27,9 @@
 #endif
 
 
-#define AtOnce 5
+#define AtOnce 4
 #define SumAtOnce 4
-#define SLICELEN 250
+#define SLICELEN 500
 #define RoughRowChunk 35000
 
 /* 
