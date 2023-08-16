@@ -27,9 +27,9 @@
 #endif
 
 
-#define AtOnce 5
+#define AtOnce 4
 #define SumAtOnce 4
-#define SLICELEN 10000
+#define SLICELEN 100
 #define RoughRowChunk 35000
 
 /* 
@@ -52,7 +52,7 @@ Wageningen/run_gcc snps=150000 indiv=150000 repetV=32 cores=10 floatLoop=0 meanS
 //#define AlteVersion 1
 #define AlteVersion 0
 
-#define coreFactor 1 // 0.25 // oder 0.2
+#define coreFactor 0.5 // 0.25 // oder 0.2
   
 #define gV5_start0(NR, TYPE, SNDTYPE, TRDTYPE, AVXTYPE, ENDTYPE)	\
   int cores = GreaterZero(opt->cores); /* NOT Long !! */      		\
